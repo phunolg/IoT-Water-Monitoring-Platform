@@ -150,7 +150,7 @@ flake8 monitoring/            # Lint code
 - Arduino IDE for firmware
 - HTTP API for data transmission
 
-## 📊 **Dashboard Features**
+## Dashboard Features
 
 ### Real-time Charts
 - **pH Levels**: Acidity monitoring with safe ranges
@@ -163,7 +163,7 @@ flake8 monitoring/            # Lint code
 - **Device Status**: ESP32 connection monitoring
 - **Alert System**: Quality threshold notifications
 
-## 🔒 **Security Features**
+## Security Features
 
 - **JWT Authentication**: Secure API access
 - **CORS Configuration**: Cross-origin request control
@@ -171,7 +171,7 @@ flake8 monitoring/            # Lint code
 - **Input Validation**: SQL injection prevention
 - **Security Headers**: XSS and clickjacking protection
 
-## 📈 **Monitoring & Health**
+## Monitoring & Health
 
 ### Health Check Endpoint
 ```json
@@ -190,7 +190,7 @@ GET /health/
 - ESP32 connectivity
 - Memory usage monitoring
 
-## 🚀 **Production Deployment**
+## Production Deployment
 
 ### Environment Variables
 ```env
@@ -202,33 +202,7 @@ DB_PASSWORD=secure_password
 ALLOWED_HOSTS=yourdomain.com
 ```
 
-### Docker Support (Optional)
-```dockerfile
-# Dockerfile included for containerization
-docker build -t smart-water-monitoring .
-docker run -p 8000:8000 smart-water-monitoring
-```
-
-## 🤝 **Contributing**
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)  
-5. Open Pull Request
-
-## 📝 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙋‍♂️ **Support**
-
-For support and questions:
-- 📧 **Email**: [your-email@example.com]
-- 🐛 **Issues**: [GitHub Issues](https://github.com/phunolg/Smart-Water-Monitoring-System/issues)
-- 📖 **Documentation**: [API Docs](http://localhost:8000/api/docs/)
-
-## 🎯 **Roadmap**
+## Roadmap
 
 - [ ] **Mobile App**: React Native companion app
 - [ ] **PostgreSQL**: Database migration support  
@@ -236,7 +210,3 @@ For support and questions:
 - [ ] **CI/CD**: GitHub Actions pipeline
 - [ ] **Grafana**: Advanced monitoring dashboard
 - [ ] **InfluxDB**: Time-series database integration
-
----
-
-**🌊 Made with ❤️ for water quality monitoring and IoT innovation**
