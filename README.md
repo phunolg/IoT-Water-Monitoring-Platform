@@ -205,8 +205,5 @@ ALLOWED_HOSTS=yourdomain.com
 ## Roadmap
 
 - [ ] **Mobile App**: React Native companion app
-- [ ] **PostgreSQL**: Database migration support  
-- [ ] **Docker**: Complete containerization
-- [ ] **CI/CD**: GitHub Actions pipeline
 - [ ] **Grafana**: Advanced monitoring dashboard
 - [ ] **InfluxDB**: Time-series database integration
