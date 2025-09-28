@@ -73,22 +73,36 @@ if DATABASE_ENGINE == 'postgresql':
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',  
-            'NAME': os.getenv('DB_NAME', 'quality_water'),             
-            'USER': os.getenv('DB_USER', 'root'),               
-            'PASSWORD': os.getenv('DB_PASSWORD', 'root'),          
-            'HOST': os.getenv('DB_HOST', 'localhost'),               
-            'PORT': os.getenv('DB_PORT', '3306'),                     
-            'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('DB_NAME', 'quality_water'),
+            'USER': os.getenv('DB_USER', 'root'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'root'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
         }
     }
 
 AUTH_USER_MODEL = 'monitoring.User'
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        'NAME': ('django.contrib.auth.password_validation.'
+                 'UserAttributeSimilarityValidator')
+    },
+    {
+        'NAME': ('django.contrib.auth.password_validation.'
+                 'MinimumLengthValidator')
+    },
+    {
+        'NAME': ('django.contrib.auth.password_validation.'
+                 'CommonPasswordValidator')
+    },
+    {
+        'NAME': ('django.contrib.auth.password_validation.'
+                 'NumericPasswordValidator')
+    },
 ]
 
 LANGUAGE_CODE = 'en-us'

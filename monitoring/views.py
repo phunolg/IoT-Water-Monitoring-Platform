@@ -65,7 +65,7 @@ def register_view(request):
             )
 
         try:
-            user = User.objects.create_user(
+            User.objects.create_user(
                 username=username, email=email, password=password1, role=role
             )
             messages.success(request, "Đăng ký thành công! Hãy đăng nhập.")
@@ -173,7 +173,8 @@ def password_reset_request(request):
             )
             messages.success(
                 request,
-                "Email đặt lại mật khẩu đã được gửi! Vui lòng kiểm tra hộp thư của bạn.",
+                ("Email đặt lại mật khẩu đã được gửi! "
+                 "Vui lòng kiểm tra hộp thư của bạn."),
             )
             return redirect("login")
         except User.DoesNotExist:
