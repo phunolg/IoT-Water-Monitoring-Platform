@@ -10,7 +10,7 @@ A Django-based IoT water quality monitoring system with ESP32 sensors and real-t
 - Real-time water quality alerts
 - Historical data tracking
 
-### API & Authentication  
+### API & Authentication
 - Django REST Framework with JWT authentication
 - Swagger/OpenAPI documentation
 - Rate limiting and security headers
@@ -48,13 +48,18 @@ water_monitoring/
 git clone https://github.com/phunolg/Smart-Water-Monitoring-System.git
 cd Smart-Water-Monitoring-System
 
-# Create virtual environment  
+# Create virtual environment
 python -m venv .venv
 .venv\Scripts\activate  # Windows
 source .venv/bin/activate  # Linux/Mac
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Setup pre-commit hooks (recommended)
+./setup-precommit.sh        # Linux/Mac
+# OR
+./setup-precommit.ps1       # Windows PowerShell
 ```
 
 ### Database Configuration
@@ -97,7 +102,7 @@ python manage.py runserver 0.0.0.0:8000
 ```cpp
 // Edit in water_sensor.ino
 const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD"; 
+const char* password = "YOUR_WIFI_PASSWORD";
 const char* serverURL = "http://192.168.1.9:8000/api/upload-reading/";
 ```
 
@@ -106,7 +111,7 @@ const char* serverURL = "http://192.168.1.9:8000/api/upload-reading/";
 ### Authentication
 ```http
 POST /api/auth/login/          # JWT login
-POST /api/auth/refresh/        # Token refresh  
+POST /api/auth/refresh/        # Token refresh
 ```
 
 ### Sensor Data
@@ -119,9 +124,22 @@ GET  /health/                  # Health check
 
 ## Development
 
+### Pre-commit Hooks (Recommended)
+```bash
+# Setup pre-commit hooks - automatically format & lint before commit
+./setup-precommit.sh           # Linux/Mac
+./setup-precommit.ps1          # Windows PowerShell
+
+# Manual pre-commit usage
+pre-commit run --all-files     # Run on all files
+pre-commit run --files changed # Run on changed files only
+git commit --no-verify         # Skip hooks if needed
+```
+
 ### Testing
 ```bash
-pytest                         # Run tests
+python manage.py test          # Run Django tests
+pytest                         # Run pytest tests
 pytest --cov=monitoring       # With coverage
 ```
 
@@ -130,6 +148,9 @@ pytest --cov=monitoring       # With coverage
 black monitoring/              # Format code
 isort monitoring/              # Sort imports
 flake8 monitoring/            # Lint code
+
+# Or run all quality checks
+pre-commit run --all-files     # Recommended: runs all checks
 ```
 
 ## Technology Stack
@@ -154,7 +175,7 @@ flake8 monitoring/            # Lint code
 
 ### Real-time Charts
 - **pH Levels**: Acidity monitoring with safe ranges
-- **TDS Values**: Dissolved solids tracking  
+- **TDS Values**: Dissolved solids tracking
 - **NTU Readings**: Turbidity measurements
 - **Auto-refresh**: 10-second update intervals
 
@@ -186,7 +207,7 @@ GET /health/
 
 ### System Metrics
 - Database connection status
-- API response times  
+- API response times
 - ESP32 connectivity
 - Memory usage monitoring
 
