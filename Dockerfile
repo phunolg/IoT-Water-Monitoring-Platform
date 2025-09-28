@@ -41,6 +41,11 @@ RUN chown -R django:django /app
 
 USER django
 
+# Create staticfiles directory
+RUN mkdir -p /app/staticfiles
+
+# Collect static files with production settings
+ENV DEBUG=False
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000

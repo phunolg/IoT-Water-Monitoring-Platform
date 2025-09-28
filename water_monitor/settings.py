@@ -113,14 +113,12 @@ USE_TZ = True
 # -------------------------
 # STATIC & MEDIA SETTINGS
 # -------------------------
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 if DEBUG:
     # Local development
     STATICFILES_DIRS = [BASE_DIR / "static"]
-else:
-    # Production (collectstatic sẽ gom vào đây)
-    STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
