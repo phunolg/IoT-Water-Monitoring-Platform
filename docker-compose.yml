@@ -1,0 +1,140 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: smart-water-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-smart_water_monitoring_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1335}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - smart-water-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: smart-water-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - smart-water-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart-water-web
+    environment:
+      - DEBUG=False
+      - DATABASE_ENGINE=postgresql
+      - DB_NAME=${POSTGRES_DB:-smart_water_monitoring_db}
+      - DB_USER=${POSTGRES_USER:-postgres}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-1335}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379/0
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,web
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - smart-water-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: smart-water-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/static
+      - media_volume:/media
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+    networks:
+      - smart-water-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+  prometheus:
+    image: prom/prometheus
+    container_name: smart-water-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - smart-water-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    container_name: smart-water-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - smart-water-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+networks:
+  smart-water-network:
+    driver: bridge
+    name: smart-water-network
+
+volumes:
+  postgres_data:
+    name: smart-water-postgres-data
+  redis_data:
+    name: smart-water-redis-data
+  static_volume:
+    name: smart-water-static
+  media_volume:
+    name: smart-water-media
+  prometheus_data:
+    name: smart-water-prometheus-data
+  grafana_data:
+    name: smart-water-grafana-data

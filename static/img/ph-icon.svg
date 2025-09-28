@@ -1,0 +1,9 @@
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- pH Icon -->
+  <circle cx="30" cy="30" r="25" fill="#2196F3" opacity="0.1" stroke="#2196F3" stroke-width="2"/>
+  <text x="30" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#2196F3">pH</text>
+  <circle cx="20" cy="35" r="3" fill="#2196F3"/>
+  <circle cx="30" cy="40" r="2" fill="#2196F3" opacity="0.7"/>
+  <circle cx="40" cy="35" r="3" fill="#2196F3"/>
+  <text x="30" y="52" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#666">Acidity</text>
+</svg>
