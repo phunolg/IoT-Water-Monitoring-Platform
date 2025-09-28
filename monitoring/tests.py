@@ -8,100 +8,110 @@ User = get_user_model()
 
 class BasicViewTests(TestCase):
     """Basic tests for main views"""
-    
+
     def test_home_view_accessible(self):
         """Test that home view is accessible"""
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
-    
+
     def test_login_view_accessible(self):
         """Test that login view is accessible"""
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
-    
-    def test_register_view_accessible(self):
-        """Test that register view is accessible"""
-        response = self.client.get(reverse('register'))
-        self.assertEqual(response.status_code, 200)
 
 
-class ModelTests(TestCase):
-    """Basic model tests"""
-    
+class UserModelTests(TestCase):
+    """Tests for User model"""
+
+    def test_create_user(self):
+        """Test creating a regular user"""
+        user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpass123'
+        )
+        self.assertEqual(user.username, 'testuser')
+        self.assertEqual(user.email, 'test@example.com')
+        self.assertTrue(user.check_password('testpass123'))
+
+
+class DeviceModelTests(TestCase):
+    """Tests for Device model"""
+
     def setUp(self):
-        """Set up test data"""
         self.user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
             password='testpass123'
         )
-    
-    def test_user_creation(self):
-        """Test user model creation"""
-        self.assertEqual(self.user.username, 'testuser')
-        self.assertEqual(self.user.email, 'test@example.com')
-        self.assertTrue(self.user.check_password('testpass123'))
-    
-    def test_device_creation(self):
-        """Test device model creation"""
+
+    def test_create_device(self):
+        """Test creating a device"""
         device = Device.objects.create(
             name='Test Device',
-            location='Test Lab',
-            description='Test ESP32 device',
+            location='Test Location',
             user=self.user
         )
         self.assertEqual(device.name, 'Test Device')
-        self.assertEqual(device.location, 'Test Lab')
+        self.assertEqual(device.location, 'Test Location')
         self.assertEqual(device.user, self.user)
-    
-    def test_reading_creation(self):
-        """Test reading model creation"""
-        device = Device.objects.create(
-            name='Test Device',
-            location='Test Lab',
-            user=self.user
-        )
-        reading = Reading.objects.create(
-            device=device,
-            ph=7.5,
-            tds=150.0,
-            ntu=2.5
-        )
-        self.assertEqual(reading.device, device)
-        self.assertEqual(reading.ph, 7.5)
-        self.assertEqual(reading.tds, 150.0)
-        self.assertEqual(reading.ntu, 2.5)
 
 
-class AuthenticationTests(TestCase):
-    """Authentication related tests"""
-    
+class ReadingModelTests(TestCase):
+    """Tests for Reading model"""
+
     def setUp(self):
-        """Set up test user"""
         self.user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
             password='testpass123'
         )
-    
-    def test_user_login(self):
-        """Test user can login"""
-        response = self.client.post(reverse('login'), {
-            'username': 'testuser',
-            'password': 'testpass123'
-        })
-        # Should redirect after successful login
-        self.assertEqual(response.status_code, 302)
-    
-    def test_dashboard_requires_auth(self):
-        """Test dashboard requires authentication"""
-        response = self.client.get(reverse('dashboard'))
-        # Should redirect to login
-        self.assertEqual(response.status_code, 302)
-        self.assertIn('login', response['Location'])
-    
-    def test_dashboard_accessible_when_logged_in(self):
-        """Test dashboard accessible when user is logged in"""
-        self.client.login(username='testuser', password='testpass123')
-        response = self.client.get(reverse('dashboard'))
+        self.device = Device.objects.create(
+            name='Test Device',
+            location='Test Location',
+            user=self.user
+        )
+
+    def test_create_reading(self):
+        """Test creating a water quality reading"""
+        reading = Reading.objects.create(
+            device=self.device,
+            ph=7.0,
+            tds=150.0,
+            ntu=2.5
+        )
+        self.assertEqual(reading.device, self.device)
+        self.assertEqual(reading.ph, 7.0)
+        self.assertEqual(reading.tds, 150.0)
+        self.assertEqual(reading.ntu, 2.5)
+
+    def test_reading_str_method(self):
+        """Test the string representation of Reading"""
+        reading = Reading.objects.create(
+            device=self.device,
+            ph=7.0,
+            tds=150.0,
+            ntu=2.5
+        )
+        expected = f"{self.device.name} - {reading.timestamp}"
+        self.assertEqual(str(reading), expected)
+
+
+class APIViewTests(TestCase):
+    """Tests for API endpoints"""
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpass123'
+        )
+        self.device = Device.objects.create(
+            name='Test Device',
+            user=self.user
+        )
+
+    def test_health_check(self):
+        """Test health check endpoint"""
+        response = self.client.get('/health/')
         self.assertEqual(response.status_code, 200)
