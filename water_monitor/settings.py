@@ -3,6 +3,7 @@
 This module contains configuration for databases, apps, middleware,
 REST framework, JWT authentication, static files, and security settings.
 """
+
 import os
 from datetime import timedelta
 from pathlib import Path
