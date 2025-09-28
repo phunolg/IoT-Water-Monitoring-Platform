@@ -41,8 +41,8 @@ jobs:
     - name: Run linting
       run: |
         flake8 monitoring/ water_monitor/ --max-line-length=88 --exclude=migrations
-        black --check monitoring/ water_monitor/
-        isort --check-only monitoring/ water_monitor/
+        black --check monitoring/ water_monitor/ --exclude=migrations
+        isort --check-only monitoring/ water_monitor/ --skip-glob="*/migrations/*"
 
     - name: Run tests
       env:
