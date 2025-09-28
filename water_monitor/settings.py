@@ -1,3 +1,8 @@
+"""Django settings for Water Monitoring project.
+
+This module contains configuration for databases, apps, middleware,
+REST framework, JWT authentication, static files, and security settings.
+"""
 import os
 from datetime import timedelta
 from pathlib import Path
@@ -94,9 +99,9 @@ AUTH_PASSWORD_VALIDATORS = [
             "UserAttributeSimilarityValidator"
         )
     },
-    {"NAME": ("django.contrib.auth.password_validation." "MinimumLengthValidator")},
-    {"NAME": ("django.contrib.auth.password_validation." "CommonPasswordValidator")},
-    {"NAME": ("django.contrib.auth.password_validation." "NumericPasswordValidator")},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 LANGUAGE_CODE = "en-us"
@@ -104,8 +109,20 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
+# -------------------------
+# STATIC & MEDIA SETTINGS
+# -------------------------
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+
+if DEBUG:
+    # Local development
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+else:
+    # Production (collectstatic sẽ gom vào đây)
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
