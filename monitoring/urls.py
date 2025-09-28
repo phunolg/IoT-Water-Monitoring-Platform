@@ -1,7 +1,7 @@
 from django.urls import path
 
-from water_monitoring.monitoring import views
-from water_monitoring.monitoring.views import (
+from . import views
+from .views import (
     AdminOnlyAPIView,
     UserProfileAPIView,
     change_password,
