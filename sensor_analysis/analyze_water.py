@@ -1,10 +1,10 @@
+import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.model_selection import train_test_split
+import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
-import matplotlib.pyplot as plt
-import seaborn as sns
+from sklearn.model_selection import train_test_split
 
 try:
     df = pd.read_csv("water_potability.csv")

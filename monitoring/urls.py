@@ -1,16 +1,9 @@
 from django.urls import path
 
 from . import views
-from .views import (
-    AdminOnlyAPIView,
-    UserProfileAPIView,
-    change_password,
-    change_user_role,
-    health_check,
-    latest_reading,
-    readings_table_view,
-    upload_reading,
-)
+from .views import (AdminOnlyAPIView, UserProfileAPIView, change_password,
+                    change_user_role, health_check, latest_reading,
+                    readings_table_view, upload_reading)
 
 urlpatterns = [
     path("register/", views.register_view, name="register"),

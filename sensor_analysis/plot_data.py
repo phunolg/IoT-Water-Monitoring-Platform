@@ -1,6 +1,6 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 import mysql.connector
+import pandas as pd
 
 # Kết nối MySQL
 conn = mysql.connector.connect(

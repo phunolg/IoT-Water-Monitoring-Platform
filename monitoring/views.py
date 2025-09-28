@@ -1,4 +1,5 @@
 import json
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -15,6 +16,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from .decorators import admin_required, user_required
 from .mixins import IsAdminUser, RoleBasedPermission
 from .models import Reading, User

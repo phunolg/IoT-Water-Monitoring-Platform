@@ -1,11 +1,9 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView,
+                                   SpectacularSwaggerView)
+
 from monitoring import views as monitoring_views
-from drf_spectacular.views import (
-    SpectacularAPIView,
-    SpectacularSwaggerView,
-    SpectacularRedocView,
-)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -1,7 +1,8 @@
 import os
 import sys
-import django
 from pathlib import Path
+
+import django
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(PROJECT_ROOT))
@@ -9,11 +10,12 @@ sys.path.append(str(PROJECT_ROOT))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "water_monitor.settings")
 django.setup()
 
-from django.db import connections
-from django.core.management import call_command
-from django.conf import settings
 import json
 from datetime import datetime
+
+from django.conf import settings
+from django.core.management import call_command
+from django.db import connections
 
 
 class DatabaseMigrator:
@@ -109,7 +111,7 @@ class DatabaseMigrator:
         print("Verifying migration...")
 
         try:
-            from monitoring.models import User, Reading, Device
+            from monitoring.models import Device, Reading, User
 
             user_count = User.objects.count()
             reading_count = Reading.objects.count()
