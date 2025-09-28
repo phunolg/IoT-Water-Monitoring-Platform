@@ -19,9 +19,7 @@ class Device(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="devices"
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="devices")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

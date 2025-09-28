@@ -173,8 +173,10 @@ def password_reset_request(request):
             )
             messages.success(
                 request,
-                ("Email đặt lại mật khẩu đã được gửi! "
-                 "Vui lòng kiểm tra hộp thư của bạn."),
+                (
+                    "Email đặt lại mật khẩu đã được gửi! "
+                    "Vui lòng kiểm tra hộp thư của bạn."
+                ),
             )
             return redirect("login")
         except User.DoesNotExist:

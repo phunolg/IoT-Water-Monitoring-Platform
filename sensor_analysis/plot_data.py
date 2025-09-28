@@ -4,10 +4,7 @@ import mysql.connector
 
 # Kết nối MySQL
 conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="water_data"
+    host="localhost", user="root", password="root", database="water_data"
 )
 
 # Đọc dữ liệu
@@ -16,7 +13,7 @@ df = pd.read_sql(query, conn)
 conn.close()
 
 # Vẽ biểu đồ
-plt.figure(figsize=(12,6))
+plt.figure(figsize=(12, 6))
 plt.plot(df["created_at"], df["ph"], label="pH")
 plt.plot(df["created_at"], df["ntu"], label="NTU")
 plt.plot(df["created_at"], df["tds"], label="TDS")
