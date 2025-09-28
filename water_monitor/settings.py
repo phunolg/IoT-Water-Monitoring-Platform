@@ -8,9 +8,14 @@ load_dotenv()
 pymysql.install_as_MySQLdb()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-#^3g-q4$ql51xg(o*(9iw^lby(*d9btw8a+p#w@v!sf!g^e%#*')
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    'django-insecure-#^3g-q4$ql51xg(o*(9iw^lby(*d9btw8a+p#w@v!sf!g^e%#*'
+)
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0').split(',')
+ALLOWED_HOSTS = os.getenv(
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0'
+).split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -159,7 +164,7 @@ SPECTACULAR_SETTINGS = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000", 
+    "http://127.0.0.1:3000",
     "http://localhost:8080",
     "http://127.0.0.1:8080",
 ]
