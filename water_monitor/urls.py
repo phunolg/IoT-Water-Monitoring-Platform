@@ -1,7 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
 from monitoring import views as monitoring_views
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -9,8 +13,12 @@ urlpatterns = [
     path("register/", monitoring_views.register_view, name="register"),
     path("login/", monitoring_views.login_view, name="login"),
     path("logout/", monitoring_views.logout_view, name="logout"),
-    path("dashboard/", monitoring_views.dashboard_view, name="dashboard"),
-    path("admin-dashboard/", monitoring_views.admin_dashboard_view, name="admin_dashboard"),
+    path("dashboard/", 
+         monitoring_views.dashboard_view, 
+         name="dashboard"),
+    path("admin-dashboard/",
+         monitoring_views.admin_dashboard_view,
+         name="admin_dashboard"),
     path("password-reset-request/",
          monitoring_views.password_reset_request,
          name="password_reset_request"),
