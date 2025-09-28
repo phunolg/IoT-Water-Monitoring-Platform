@@ -1,6 +1,6 @@
 import os
-import sys
 from pathlib import Path
+import sys
 
 import django
 
@@ -10,8 +10,8 @@ sys.path.append(str(PROJECT_ROOT))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "water_monitor.settings")
 django.setup()
 
-import json
 from datetime import datetime
+import json
 
 from django.conf import settings
 from django.core.management import call_command
