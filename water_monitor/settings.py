@@ -1,9 +1,9 @@
-from datetime import timedelta
 import os
+from datetime import timedelta
 from pathlib import Path
 
-from dotenv import load_dotenv
 import pymysql
+from dotenv import load_dotenv
 
 load_dotenv()
 pymysql.install_as_MySQLdb()
