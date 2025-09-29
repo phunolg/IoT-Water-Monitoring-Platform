@@ -2,10 +2,17 @@
 
 A Django-based IoT water quality monitoring system with ESP32 sensors and real-time dashboard.
 
+## Overview
+
+This project builds a **floating buoy system** for **automatic water quality monitoring**.
+It collects real-time data such as pH, turbidity (NTU), temperature, conductivity, dissolved oxygen… using IoT sensors and transmits them to a central server over LoRa, 4G or Wi-Fi.
+AI models analyse trends, detect anomalies and predict near-future water quality to provide early warnings.
+The platform offers interactive dashboards, visual reports and alerts to support efficient water environment management.
+
 ## Features
 
 ### Real-time Monitoring
-- ESP32 integration for pH, TDS, NTU sensors
+- ESP32 integration for pH, TDS, NTU sensors (expandable: temperature DS18B20, GPS, dissolved oxygen)
 - Live dashboard with Chart.js visualization
 - Real-time water quality alerts
 - Historical data tracking
@@ -27,17 +34,34 @@ A Django-based IoT water quality monitoring system with ESP32 sensors and real-t
 - GitHub Actions CI/CD pipeline
 - Docker containerization support
 
+## Hardware Components
+
+- ESP32 DevKit
+- pH sensor (analog/BNC) for acidity measurement
+- NTU sensor for turbidity
+- TDS sensor for total dissolved solids
+- DS18B20 sensor for water temperature
+- GPS module (NEO-6M or similar)
+- LED display for local feedback
+- Power supply unit
+
+### Hardware Diagram
+
+![Hardware Diagram](./docs/hardware-diagram.png)
+
 ## Project Structure
 
 ```
 water_monitoring/
 ├── monitoring/             # Main Django app
-├── templates/             # HTML templates
-├── water_monitor/         # Django settings
-├── firmware/              # ESP32 Arduino code
-├── sensor_analysis/       # Data analysis scripts
-├── static/               # Static files
-└── scripts/              # Utility scripts
+├── templates/              # HTML templates
+├── water_monitor/          # Django settings
+├── firmware/               # ESP32 Arduino code
+├── sensor_analysis/        # Data analysis scripts
+├── static/                 # Static files
+├── scripts/                # Utility scripts
+└── docs/
+    └── hardware-diagram.png
 ```
 
 ## Quick Start
@@ -83,6 +107,7 @@ python manage.py runserver 0.0.0.0:8000
 - API Documentation: http://localhost:8000/api/docs/
 - Admin Panel: http://localhost:8000/admin/
 - Health Check: http://localhost:8000/health/
+```
 
 ## ESP32 Setup
 
@@ -129,28 +154,20 @@ GET  /health/                  # Health check
 # Setup pre-commit hooks - automatically format & lint before commit
 ./setup-precommit.sh           # Linux/Mac
 ./setup-precommit.ps1          # Windows PowerShell
-
-# Manual pre-commit usage
-pre-commit run --all-files     # Run on all files
-pre-commit run --files changed # Run on changed files only
-git commit --no-verify         # Skip hooks if needed
 ```
 
 ### Testing
 ```bash
 python manage.py test          # Run Django tests
 pytest                         # Run pytest tests
-pytest --cov=monitoring       # With coverage
+pytest --cov=monitoring        # With coverage
 ```
 
 ### Code Quality
 ```bash
 black monitoring/              # Format code
 isort monitoring/              # Sort imports
-flake8 monitoring/            # Lint code
-
-# Or run all quality checks
-pre-commit run --all-files     # Recommended: runs all checks
+flake8 monitoring/             # Lint code
 ```
 
 ## Technology Stack
